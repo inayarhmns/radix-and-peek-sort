@@ -1,16 +1,8 @@
-import random
 from peeksort import peek_sort 
 from radixsort import radix_sort
 import tracemalloc
 import time
-def dataset_sorted(n):
-    return [i+1 for i in range (n)]
-
-def dataset_reversed(sorted):
-    return list(reversed(sorted))
-
-def dataset_random(n):
-    return random.choices(range(n),k=n)
+import json
 
 def elapsed_since(start):
     elapsed_time = (time.time() - start) * 1000  # Convert to milliseconds
@@ -19,35 +11,35 @@ def elapsed_since(start):
 def get_time():
     return time.time()
 
-sorted_k = dataset_sorted(1000)
-random_k = dataset_random(1000)
-reversed_k = dataset_reversed(sorted_k)
 
-sorted_s = dataset_sorted(10000)
-random_s = dataset_random(10000)
-reversed_s = dataset_reversed(sorted_s)
+with open('sorted_k.txt', 'r') as file:
+    # Read the contents of the file
+    sorted_k = json.loads(file.read())
+with open('random_k.txt', 'r') as file:
+    # Read the contents of the file
+    random_k = json.loads(file.read())
+with open('reversed_k.txt', 'r') as file:
+    # Read the contents of the file
+    reversed_k = json.loads(file.read())
+with open('sorted_s.txt', 'r') as file:
+    # Read the contents of the file
+    sorted_s = json.loads(file.read())
+with open('random_s.txt', 'r') as file:
+    # Read the contents of the file
+    random_s = json.loads(file.read())
+with open('reversed_s.txt', 'r') as file:
+    # Read the contents of the file
+    reversed_s = json.loads(file.read())
+with open('sorted_b.txt', 'r') as file:
+    # Read the contents of the file
+    sorted_b = json.loads(file.read())
+with open('random_b.txt', 'r') as file:
+    # Read the contents of the file
+    random_b = json.loads(file.read())
+with open('reversed_b.txt', 'r') as file:
+    # Read the contents of the file
+    reversed_b = json.loads(file.read())
 
-sorted_b = dataset_sorted(100000)
-random_b = dataset_random(100000)
-reversed_b = dataset_reversed(sorted_b)
-with open('sorted_k.txt', 'w', encoding='utf-8') as file:
-    file.write(str(sorted_k))
-with open('random_k.txt', 'w', encoding='utf-8') as file:
-    file.write(str(random_k))
-with open('reversed_k.txt', 'w', encoding='utf-8') as file:
-    file.write(str(reversed_k))
-with open('sorted_s.txt', 'w', encoding='utf-8') as file:
-    file.write(str(sorted_s))
-with open('random_s.txt', 'w', encoding='utf-8') as file:
-    file.write(str(random_s))
-with open('reversed_s.txt', 'w', encoding='utf-8') as file:
-    file.write(str(reversed_s))
-with open('sorted_b.txt', 'w', encoding='utf-8') as file:
-    file.write(str(sorted_b))
-with open('random_b.txt', 'w', encoding='utf-8') as file:
-    file.write(str(random_b))
-with open('reversed_b.txt', 'w', encoding='utf-8') as file:
-    file.write(str(reversed_b))
 
 datasets = {
     'sorted_k':sorted_k,
@@ -102,20 +94,18 @@ def average_memtest(algo, dataset):
             mem_sum += memory_peak
     return f"{mem_sum/n} B\n"
 
-# with open('memory.txt', 'w', encoding='utf-8') as file:
-#     for i in datasets:
-#         mem = average_memtest('radix', datasets.get(i))
-#         file.write(mem)
-#     for i in datasets:
-#         mem = average_memtest('peek', datasets.get(i))
-#         file.write(mem)
+with open('memory.txt', 'w', encoding='utf-8') as file:
+    for i in datasets:
+        mem = average_memtest('radix', datasets.get(i))
+        file.write(mem)
+    for i in datasets:
+        mem = average_memtest('peek', datasets.get(i))
+        file.write(mem)
 
-# with open('time.txt', 'w', encoding='utf-8') as file:
-#     for i in datasets:
-#         t = average_timetest('radix', datasets.get(i))
-#         file.write("{:.2f} ms\n".format(t))
-#     for i in datasets:
-#         t = average_timetest('peek', datasets.get(i))
-#         file.write("{:.2f} ms\n".format(t))
-
- 
+with open('time2.txt', 'w', encoding='utf-8') as file:
+    for i in datasets:
+        t = average_timetest('radix', datasets.get(i))
+        file.write("{:.2f} ms\n".format(t))
+    for i in datasets:
+        t = average_timetest('peek', datasets.get(i))
+        file.write("{:.2f} ms\n".format(t))
